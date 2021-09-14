@@ -30,21 +30,20 @@ $(document).ready(function () {
 
         console.log(get_isolated_random_prime_api_url)
 
-        $.ajax({
-            url: get_isolated_random_prime_api_url,
-            type: 'get',
-            cache: false,
-            success: function (incomingData) {
-                // console.log('success!');
-                get_isolated_random_prime_api_results(incomingData);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: ", textStatus); 
-                console.log("Error: ", errorThrown);
-                console.log("XMLHttpRequest: ", XMLHttpRequest.responseJSON.error);
-                displayError(XMLHttpRequest.responseJSON.error, "error-get-isolated-random-prime")
+        fetch(get_isolated_random_prime_api_url)
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
             }
-        });
+            throw new Error(response.statusText);
+          })
+          .then((responseJson) =>
+            get_isolated_random_prime_api_results(responseJson)
+          )
+          .catch((err) => {
+            console.log(err);
+            displayError(err.error, "error-get-isolated-random-prime");
+          });
     };
 })
 
