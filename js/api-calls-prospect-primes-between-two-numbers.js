@@ -31,21 +31,23 @@ $(document).ready(function () {
 
         console.log(prospect_primes_between_two_numbers_api_url)
 
-        $.ajax({
-            url: prospect_primes_between_two_numbers_api_url,
-            type: 'get',
-            cache: false,
-            success: function (incomingData) {
-                // console.log('success!');
-                prospect_primes_between_two_numbers_api_results(incomingData);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: ", textStatus); 
-                console.log("Error: ", errorThrown);
-                console.log("XMLHttpRequest: ", XMLHttpRequest.responseJSON.error);
-                displayError(XMLHttpRequest.responseJSON.error, "error-prospect-primes-between-two-numbers")
+        fetch(prospect_primes_between_two_numbers_api_url)
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
             }
-        });
+            throw new Error(response.statusText);
+          })
+          .then((responseJson) =>
+            prospect_primes_between_two_numbers_api_results(responseJson)
+          )
+          .catch((err) => {
+            console.log(err);
+            displayError(
+              err.error,
+              "error-prospect-primes-between-two-numbers"
+            );
+          });
     };
 })
 
