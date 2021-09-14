@@ -8,7 +8,7 @@ $(document).ready(function () {
     $(".is-this-number-prime").submit(function (event) {
 
         //force JavaScript to handle the submission
-        // event.preventDefault();
+        event.preventDefault();
 
         //get the value from the input box
         let is_this_number_prime_apiKey = $("#is-this-number-prime-apiKey").val();
@@ -30,21 +30,37 @@ $(document).ready(function () {
 
         console.log(is_this_number_prime_api_url)
 
-        $.ajax({
-            url: is_this_number_prime_api_url,
-            type: 'get',
-            cache: false,
-            success: function (incomingData) {
-                // console.log('success!');
-                is_this_number_prime_api_results(incomingData);
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("Status: ", textStatus); 
-                console.log("Error: ", errorThrown);
-                console.log("XMLHttpRequest: ", XMLHttpRequest.responseJSON.error);
-                displayError(XMLHttpRequest.responseJSON.error, "error-is-this-number-prime")
-            }
-        });
+        fetch(is_this_number_prime_api_url)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.json())
+            })
+            .then(responseJson => is_this_number_prime_api_results(responseJson))
+            .catch(err => {
+                console.log(err);
+                displayError(err.error, "error-is-this-number-prime")
+            })
+
+
+
+
+        // $.ajax({
+        //     url: is_this_number_prime_api_url,
+        //     type: 'get',
+        //     cache: false,
+        //     success: function (incomingData) {
+        //         // console.log('success!');
+        //         is_this_number_prime_api_results(incomingData);
+        //     },
+        //     error: function(XMLHttpRequest, textStatus, errorThrown) {
+        //         console.log("Status: ", textStatus); 
+        //         console.log("Error: ", errorThrown);
+        //         console.log("XMLHttpRequest: ", XMLHttpRequest.responseJSON.error);
+        //         displayError(XMLHttpRequest.responseJSON.error, "error-is-this-number-prime")
+        //     }
+        // });
     };
 })
 

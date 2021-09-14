@@ -24,7 +24,7 @@ $(document).ready(function () {
         get_random_prime_api_call(get_random_prime_apiKey, get_random_prime_check_start, get_random_prime_check_end, get_random_prime_include_explanations, get_random_prime_include_prime_types_list, get_random_prime_language);
     });
 
-    //step2 using the input from the user make the API call to get the JSON response
+    //step2 using the input from the user, make the API call to get the JSON response
 
     function get_random_prime_api_call(get_random_prime_apiKey, get_random_prime_check_start, get_random_prime_check_end, get_random_prime_include_explanations, get_random_prime_include_prime_types_list, get_random_prime_language) {
         let get_random_prime_api_url = `http://api.prime-numbers.io/get-random-prime.php?key=${get_random_prime_apiKey}&start=${get_random_prime_check_start}&end=${get_random_prime_check_end}&include_explanations=${get_random_prime_include_explanations}&include_prime_types_list=${get_random_prime_include_prime_types_list}&language=${get_random_prime_language}`
