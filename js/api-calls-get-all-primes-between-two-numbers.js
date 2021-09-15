@@ -60,14 +60,14 @@ $(document).ready(function () {
         if (response.ok) {
           return response.json();
         }
-        throw new Error(response.statusText);
+        return response.json().then(response => { throw new Error(response.error) })
       })
       .then((responseJson) =>
         get_all_primes_between_two_numbers_api_results(responseJson)
       )
       .catch((err) => {
         console.log(err);
-        displayError(err.error, "error-get-all-primes-between-two-numbers");
+        displayError(err, "error-get-all-primes-between-two-numbers");
       });
   }
 });

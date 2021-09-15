@@ -35,14 +35,14 @@ $(document).ready(function () {
             if (response.ok) {
               return response.json();
             }
-            throw new Error(response.statusText);
+              return response.json().then(response => { throw new Error(response.error) })
           })
           .then((responseJson) =>
             get_isolated_random_prime_api_results(responseJson)
           )
           .catch((err) => {
             console.log(err);
-            displayError(err.error, "error-get-isolated-random-prime");
+            displayError(err, "error-get-isolated-random-prime");
           });
     };
 })

@@ -35,12 +35,12 @@ $(document).ready(function () {
                 if (response.ok) {
                     return response.json();
                 }
-                throw new Error(response.json())
+                return response.json().then(response => { throw new Error(response.error) })
             })
             .then(responseJson => is_this_number_prime_api_results(responseJson))
             .catch(err => {
                 console.log(err);
-                displayError(err.error, "error-is-this-number-prime")
+                displayError(err, "error-is-this-number-prime")
             })
     };
 })

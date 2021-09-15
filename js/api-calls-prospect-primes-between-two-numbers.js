@@ -36,17 +36,14 @@ $(document).ready(function () {
             if (response.ok) {
               return response.json();
             }
-            throw new Error(response.statusText);
+            return response.json().then(response => { throw new Error(response.error) })
           })
           .then((responseJson) =>
             prospect_primes_between_two_numbers_api_results(responseJson)
           )
           .catch((err) => {
             console.log(err);
-            displayError(
-              err.error,
-              "error-prospect-primes-between-two-numbers"
-            );
+            displayError(err, "error-prospect-primes-between-two-numbers");
           });
     };
 })
